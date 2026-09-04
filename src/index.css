@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+@theme {
+  --font-px: "Press Start 2P", monospace;
+  --font-crt: "VT323", monospace;
+  --color-night-900: #0b0818;
+  --color-night-800: #141031;
+  --color-night-700: #1d1747;
+  --color-night-600: #2a2160;
+  --color-bug-400: #a8e85a;
+  --color-bug-500: #9be04a;
+  --color-bug-700: #5aa02c;
+  --color-amber-px: #ffd23f;
+  --color-blood-px: #ff4757;
+  --color-aqua-px: #4dd6ff;
+  --color-gb-100: #d8d2bc;
+  --color-gb-200: #cfc9b4;
+  --color-gb-300: #b3ac95;
+  --color-gb-800: #23232e;
+  --color-gb-900: #181822;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  touch-action: manipulation;
+  background: #0b0818;
+  color: #e8e4f0;
+  font-family: var(--font-crt);
+}
+
+canvas.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ---------- retro building blocks ---------- */
+
+.pixel-panel {
+  border: 4px solid #000;
+  box-shadow:
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.35),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.14),
+    6px 6px 0 0 #000;
+}
+
+.btn-retro {
+  font-family: var(--font-px);
+  border: 4px solid #000;
+  box-shadow:
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.3),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.25),
+    0 6px 0 0 #000;
+  transition:
+    transform 70ms steps(2),
+    box-shadow 70ms steps(2),
+    filter 70ms;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+.btn-retro:active {
+  transform: translateY(5px);
+  box-shadow:
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.3),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.25),
+    0 1px 0 0 #000;
+  filter: brightness(0.92);
+}
+
+.blink {
+  animation: px-blink 1s steps(2, start) infinite;
+}
+@keyframes px-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.jitter:hover {
+  animation: px-jitter 220ms steps(2) infinite;
+}
+@keyframes px-jitter {
+  0% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate(-2px, 2px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(2px, -1px) rotate(-2deg);
+  }
+}
+
+.float-slow {
+  animation: px-float 3.4s ease-in-out infinite;
+}
+@keyframes px-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.bug-run {
+  animation: bug-run 9s linear infinite;
+}
+@keyframes bug-run {
+  0% {
+    transform: translateX(-12vw) scaleX(1);
+  }
+  46% {
+    transform: translateX(104vw) scaleX(1);
+  }
+  50% {
+    transform: translateX(104vw) scaleX(-1);
+  }
+  96% {
+    transform: translateX(-12vw) scaleX(-1);
+  }
+  100% {
+    transform: translateX(-12vw) scaleX(1);
+  }
+}
+
+.confetti-bit {
+  position: absolute;
+  top: -6%;
+  width: 8px;
+  height: 8px;
+  animation: confetti-fall linear infinite;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-4vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(108vh) rotate(720deg);
+  }
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0px,
+    rgba(0, 0, 0, 0.16) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.crt-vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 58%,
+    rgba(5, 2, 16, 0.55) 100%
+  );
+  z-index: 5;
+}
+
+.starfield {
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 34% 8%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(2px 2px at 58% 18%, #4dd6ff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 74% 30%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 88% 12%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(2px 2px at 22% 38%, #a8e85a 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 45% 32%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 66% 42%, #ffe9b0 50%, transparent 51%),
+    radial-gradient(2px 2px at 92% 44%, #ff7bac 50%, transparent 51%);
+}
+
+/* ---------- gameboy console ---------- */
+
+.gb-shell {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 34%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.045) 0 2px,
+      transparent 2px 4px
+    ),
+    #cfc9b4;
+  border-top: 6px solid #181822;
+  box-shadow:
+    inset 0 10px 0 -4px rgba(255, 255, 255, 0.35),
+    inset 0 -14px 24px rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+
+.gb-groove {
+  border-top: 3px solid #8f8971;
+  border-bottom: 3px solid #f0ead6;
+}
+
+.dpad-arm {
+  background:
+    linear-gradient(145deg, #34343f, #23232e 55%, #15151d);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.5),
+    0 4px 0 #0c0c12;
+  touch-action: none;
+  user-select: none;
+}
+.dpad-arm:active,
+.dpad-arm.pressed {
+  filter: brightness(1.28);
+  box-shadow:
+    inset 0 4px 6px rgba(0, 0, 0, 0.7),
+    0 2px 0 #0c0c12;
+}
+
+.ab-btn {
+  background: radial-gradient(circle at 34% 28%, #c65a86, #9c3b63 58%, #6e2344);
+  border: 4px solid #181822;
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.35),
+    0 6px 0 #10101a,
+    0 10px 12px rgba(0, 0, 0, 0.35);
+  touch-action: none;
+  user-select: none;
+  transition: transform 60ms steps(2), box-shadow 60ms steps(2);
+}
+.ab-btn:active,
+.ab-btn.pressed {
+  transform: translateY(5px);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.4),
+    0 1px 0 #10101a;
+}
+
+.pill-btn {
+  background: linear-gradient(160deg, #a49e89, #7d7763);
+  border: 3px solid #181822;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    0 4px 0 #10101a;
+  touch-action: none;
+  user-select: none;
+}
+.pill-btn:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    0 1px 0 #10101a;
+}
+
+.speaker-bar {
+  background: linear-gradient(to bottom, #8f8971, #6d6753);
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.led-on {
+  background: #ff4757;
+  box-shadow:
+    0 0 6px 2px rgba(255, 71, 87, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  animation: led-pulse 2.2s ease-in-out infinite;
+}
+@keyframes led-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.stat-pip {
+  border: 2px solid #000;
+  box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.4);
+}
